@@ -30,4 +30,46 @@ $(window).on('scroll', function(){
     if(scrollY <= 466){
         $('.page-header.sticky').stop().animate({top:'-200px'},100)
     }
+});
+
+// 최상위 부모로부터의 위치
+console.log($('.hero-header').offset());
+console.log($('.page-header.sticky').offset());
+// 부모로부터의 위치
+console.log($('.hero-header').position());
+console.log($('.page-header.sticky').position());
+
+
+// scroll spy : 
+// 컨텐츠의 위치에 따라 메뉴를 표시하기
+
+
+// html, body {scroll-behavior : smooth}
+$('.primary-nav a').on('click', function(event){
+    event.preventDefault();
+
+    // console.log($(this).attr('href'));
+    const id = $(this).attr('href');
+    // console.log($(id).offset());
+
+    $('html, body').animate({scrollTop: $(id).offset().top },400)
+});
+
+// 스크롤에 따라 글자 색 변경
+$(window).on('scroll', function(){
+    const top = scrollY;
+    console.log(top);
+
+    // js의 forEach()와 같다
+    // 차이점은 index 먼저, 다음이 item이다.
+    $('.primary-nav a').css('color', 'white');
+
+    $('p').each(function(i){
+        const tag = $(this);
+        // console.log(tag.offset().top);
+        // if(top > tag.offset().top && top > tag.offset().top + $(this).height()){
+        if(top > tag.offset().top){
+            $('.primary-nav li').eq(i).find('a').css('color', 'red');
+        }
+    });
 })
